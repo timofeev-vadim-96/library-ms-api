@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class DaoInitializer {
-    private BookDaoInitializer bookDaoInitializer;
-    private ReaderDaoInitializer readerDaoInitializer;
-    private IssueDaoInitializer issueDaoInitializer;
+    private BookRepositoryInitializer bookRepositoryInitializer;
+    private ReaderRepositoryInitializer readerRepositoryInitializer;
+    private IssueRepositoryInitializer issueRepositoryInitializer;
 
     @EventListener(ContextRefreshedEvent.class)
     public void init(){
-        bookDaoInitializer.init();
-        readerDaoInitializer.init();
-        issueDaoInitializer.init();
+        bookRepositoryInitializer.init();
+        readerRepositoryInitializer.init();
+        issueRepositoryInitializer.init();
     }
 }

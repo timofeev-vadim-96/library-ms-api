@@ -1,7 +1,7 @@
 package com.example.restapi.controllers;
 
-import com.example.restapi.models.Book;
-import com.example.restapi.services.ServiceGeneral;
+import com.example.restapi.models.BookEntity;
+import com.example.restapi.services.book.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,35 +11,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/book")
 public class BookController {
-    private final ServiceGeneral<Book> service;
+    private final BookService service;
 
-    public BookController(ServiceGeneral<Book> service) {
+    public BookController(BookService service) {
         this.service = service;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable("id") long id){
-        Book book = service.getById(id);
-        if (book == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(book, HttpStatus.OK);
+    public ResponseEntity<BookEntity> getBookById(@PathVariable("id") long id){
+        BookEntity bookEntity = service.findById(id);
+        if (bookEntity == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>(bookEntity, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeBookById(@PathVariable("id") long id){
-        boolean isSuccessfully = service.removeById(id);
-        if (!isSuccessfully) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(HttpStatus.OK);
+        service.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody Book inputBook) {
-        Book book = service.add(inputBook);
-        return new ResponseEntity<>(book, HttpStatus.CREATED);
+    public ResponseEntity<BookEntity> addBook(@RequestBody BookEntity inputBookEntity) {
+        BookEntity bookEntity = service.save(inputBookEntity);
+        return new ResponseEntity<>(bookEntity, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> getALl(){
-        List<Book> books = service.getAll();
-        return new ResponseEntity<>(books, HttpStatus.OK);
+    public ResponseEntity<List<BookEntity>> getALl(){
+        List<BookEntity> bookEntities = service.findAll();
+        return new ResponseEntity<>(bookEntities, HttpStatus.OK);
     }
 }

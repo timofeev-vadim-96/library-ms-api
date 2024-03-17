@@ -1,9 +1,9 @@
 package com.example.restapi.controllers;
 
-import com.example.restapi.models.Issue;
-import com.example.restapi.models.Reader;
-import com.example.restapi.services.issue.ReaderIssuesService;
-import com.example.restapi.services.ServiceGeneral;
+import com.example.restapi.models.IssueEntity;
+import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.services.issue.IssueService;
+import com.example.restapi.services.reader.ReaderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,44 +13,43 @@ import java.util.List;
 @RestController
 @RequestMapping("/reader")
 public class ReaderController {
-    private final ServiceGeneral<Reader> readerService;
-    private final ReaderIssuesService issueService;
+    private final ReaderService readerService;
+    private final IssueService issueService;
 
-    public ReaderController(ServiceGeneral<Reader> readerService, ReaderIssuesService issueService) {
+    public ReaderController(ReaderService readerService, IssueService issueService) {
         this.readerService = readerService;
         this.issueService = issueService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reader> getById(@PathVariable("id") long id){
-        Reader reader = readerService.getById(id);
-        if (reader == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(reader, HttpStatus.OK);
+    public ResponseEntity<ReaderEntity> getById(@PathVariable("id") long id){
+        ReaderEntity readerEntity = readerService.findById(id);
+        if (readerEntity == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>(readerEntity, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Reader> add(@RequestBody Reader inputReader){
-        Reader returnedReader = readerService.add(inputReader);
-        return new ResponseEntity<>(returnedReader, HttpStatus.CREATED);
+    public ResponseEntity<ReaderEntity> add(@RequestBody ReaderEntity inputReaderEntity){
+        ReaderEntity returnedReaderEntity = readerService.save(inputReaderEntity);
+        return new ResponseEntity<>(returnedReaderEntity, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") long id){
-        boolean isSuccessfully = readerService.removeById(id);
-        if (!isSuccessfully) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(HttpStatus.OK);
+        readerService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{id}/issue")
-    public ResponseEntity<List<Issue>> readerIssues(@PathVariable("id") long id){
-        List<Issue> readerIssues = issueService.getReaderIssues(id);
-        if (readerIssues == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(readerIssues, HttpStatus.OK);
+    public ResponseEntity<List<IssueEntity>> readerIssues(@PathVariable("id") long id){
+        List<IssueEntity> readerIssueEntities = issueService.getReaderIssues(id);
+        if (readerIssueEntities == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(readerIssueEntities, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Reader>> getALl(){
-        List<Reader> readers = readerService.getAll();
-        return new ResponseEntity<>(readers, HttpStatus.OK);
+    public ResponseEntity<List<ReaderEntity>> getALl(){
+        List<ReaderEntity> readerEntities = readerService.findAll();
+        return new ResponseEntity<>(readerEntities, HttpStatus.OK);
     }
 }
