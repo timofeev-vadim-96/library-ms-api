@@ -15,7 +15,7 @@ public class BookRepositoryInitializer {
     }
 
     public void init(){
-        if (bookDao.findAll().stream().count() == 0) {
+        if (bookDao.findAll().isEmpty()) {
             bookDao.save(new BookEntity("Мастер и Маргарита"));
             bookDao.save(new BookEntity("Песнь льда и пламени"));
             bookDao.save(new BookEntity("Тень и кость"));

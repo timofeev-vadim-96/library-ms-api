@@ -17,7 +17,7 @@ public class ReaderRepositoryInitializer {
     }
 
     public void init(){
-        if (dao.findAll().stream().count() == 0) {
+        if (dao.findAll().isEmpty()) {
             dao.save(new ReaderEntity("Иван", "Иванович", "89991231321", "vanya@ya.ru",
                     LocalDate.of(1980, 10, 1)));
 

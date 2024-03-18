@@ -28,7 +28,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueEntity findById(long id){
-        return issueDao.findById(id).get();
+        return issueDao.findById(id).orElse(null);
     }
 
     @Override

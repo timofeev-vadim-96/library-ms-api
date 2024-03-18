@@ -13,7 +13,7 @@ public class IssueRepositoryInitializer {
     private final IssueRepository issueDao;
 
     public void init(){
-        if (issueDao.findAll().stream().count() == 0) {
+        if (issueDao.findAll().isEmpty()) {
             IssueEntity firstIssue = new IssueEntity(0L, 1L);
             firstIssue.setIssueAt();
             IssueEntity secondIssue = new IssueEntity(1L, 1L);
