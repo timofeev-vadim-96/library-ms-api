@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги на руках у читателя</title>
+</head>
+<body>
+<h3><b>Список книг на руках пользователя: </b></h3>
+<h4>ID: <span th:text="${reader.getId()}"></span>, имя: <span th:text="${reader.getFirstName()}"></span>,
+    фамилия: <span th:text="${reader.getSecondName()}"></span></h4>
+<hr>
+<ul th:each="book: ${books}">
+    <li th:text="${book.getName()}"></li>
+</ul>
+</body>
+</html>

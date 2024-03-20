@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Случаи выдачи книг</title>
+</head>
+<body>
+<h3><b>Перечень случаев выдачи книг: </b></h3>
+<hr>
+<table>
+    <tr>
+        <th>id</th>
+        <th>id книги</th>
+        <th>id читателя</th>
+        <th>получение</th>
+        <th>возврат</th>
+    </tr>
+    <tr th:each="issue : ${issues}">
+        <td th:text="${issue.getId()}"></td>
+        <td th:text="${issue.getBookId()}"></td>
+        <td th:text="${issue.getReaderId()}"></td>
+        <td th:text="${issue.getIssueAt()}"></td>
+        <td th:text="${issue.getReturnedAt()}"></td>
+    </tr>
+</table>
+</body>
+</html>

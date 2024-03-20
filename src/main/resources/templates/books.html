@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги</title>
+</head>
+<body>
+<h3><b>Список всех доступных книг: </b></h3>
+<hr>
+<ul th:each="book : ${books}">
+    <li th:text="${book.getName()}"></li>
+</ul>
+</body>
+</html>

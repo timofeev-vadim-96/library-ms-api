@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатели</title>
+</head>
+<body>
+<h3><b>Список читателей: </b></h3>
+<hr>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Телефон</th>
+        <th>Почта</th>
+        <th>День рождения</th>
+    </tr>
+    <tr th:each="reader : ${readers}">
+        <td th:text="${reader.getId()}"></td>
+        <td th:text="${reader.getFirstName()}"></td>
+        <td th:text="${reader.getSecondName()}"></td>
+        <td th:text="${reader.getPhone()}"></td>
+        <td th:text="${reader.getEmail()}"></td>
+        <td th:text="${reader.getBirthDay()}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -7,13 +7,14 @@ import com.example.restapi.exceptions.TheBookIsBusy;
 import com.example.restapi.models.BookEntity;
 import com.example.restapi.models.IssueEntity;
 import com.example.restapi.models.ReaderEntity;
-import com.example.restapi.services.book.BookServiceImpl;
-import com.example.restapi.services.reader.ReaderServiceImpl;
+import com.example.restapi.services.book.BookService;
+import com.example.restapi.services.reader.ReaderService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +23,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class IssueServiceImpl implements IssueService {
     private final IssueRepository issueDao;
-    private final ReaderServiceImpl readerServiceImpl;
-    private final BookServiceImpl bookServiceImpl;
+    private final ReaderService readerService;
+    private final BookService bookService;
     private Environment environment;
 
     @Override
@@ -33,8 +34,8 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueEntity save(IssueRequest issueRequest) {
-        ReaderEntity reader = readerServiceImpl.findById(issueRequest.getReaderId());
-        BookEntity book = bookServiceImpl.findById(issueRequest.getBookId());
+        ReaderEntity reader = readerService.findById(issueRequest.getReaderId());
+        BookEntity book = bookService.findById(issueRequest.getBookId());
 
         if (reader == null) {
             log.info("Запрос на добавление факта выдачи ссылается на не существующего читателя. readerId={}",
@@ -77,14 +78,14 @@ public class IssueServiceImpl implements IssueService {
                 .filter(issue -> issue.getReaderId() == readerEntity.getId() && issue.getReturnedAt() == null)
                 .count();
 
-        Integer maxAllowedBooks = environment.getProperty("${application.issue.max-allowed-books}", Integer.class);
+        Integer maxAllowedBooks = environment.getProperty("${application.issue.max-allowed-books:1}", Integer.class);
         if (maxAllowedBooks == null) maxAllowedBooks = 1;
         return quantityBooksOnHand > maxAllowedBooks;
     }
 
     @Override
     public List<IssueEntity> getReaderIssues(long readerId) {
-        ReaderEntity readerEntity = readerServiceImpl.findById(readerId);
+        ReaderEntity readerEntity = readerService.findById(readerId);
         if (readerEntity == null) {
             log.info("Запрос на получения списка выдач книг на руки ссылается на не существующего читателя. readerId={}",
                     readerId);
@@ -93,6 +94,24 @@ public class IssueServiceImpl implements IssueService {
         return issueDao.findAll().stream()
                 .filter(issue -> issue.getReaderId() == readerId && issue.getReturnedAt() == null)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookEntity> getReaderBooks(long readerId){
+        ReaderEntity readerEntity = readerService.findById(readerId);
+        if (readerEntity == null) {
+            log.info("Запрос на получения списка книг на руках ссылается на не существующего читателя. readerId={}",
+                    readerId);
+            return null;
+        }
+        List<IssueEntity> readersIssues = getReaderIssues(readerId);
+        List<BookEntity> readersBooks = new ArrayList<>(readersIssues.size());
+        for (IssueEntity issue: readersIssues){
+            readersBooks.add(bookService.findById(issue.getBookId()));
+        }
+        //todo
+        System.out.println(readersBooks);
+        return readersBooks;
     }
 
     @Override

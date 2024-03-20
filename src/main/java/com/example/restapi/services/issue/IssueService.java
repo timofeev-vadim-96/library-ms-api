@@ -1,6 +1,7 @@
 package com.example.restapi.services.issue;
 
 import com.example.restapi.controllers.dto.IssueRequest;
+import com.example.restapi.models.BookEntity;
 import com.example.restapi.models.IssueEntity;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface IssueService {
 
 
     List<IssueEntity> getReaderIssues(long readerId);
+    public List<BookEntity> getReaderBooks(long readerId);
 
     IssueEntity closeIssue(long issueId);
 }

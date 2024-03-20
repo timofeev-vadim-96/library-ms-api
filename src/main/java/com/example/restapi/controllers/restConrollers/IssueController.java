@@ -1,4 +1,4 @@
-package com.example.restapi.controllers;
+package com.example.restapi.controllers.restConrollers;
 
 import com.example.restapi.controllers.dto.IssueRequest;
 import com.example.restapi.exceptions.DebtorException;

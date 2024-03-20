@@ -14,11 +14,11 @@ public class IssueRepositoryInitializer {
 
     public void init(){
         if (issueDao.findAll().isEmpty()) {
-            IssueEntity firstIssue = new IssueEntity(0L, 1L);
+            IssueEntity firstIssue = new IssueEntity(1L, 1L);
             firstIssue.setIssueAt();
-            IssueEntity secondIssue = new IssueEntity(1L, 1L);
+            IssueEntity secondIssue = new IssueEntity(2L, 1L);
             secondIssue.setIssueAt();
-            IssueEntity thirdIssue = new IssueEntity(2L, 2L);
+            IssueEntity thirdIssue = new IssueEntity(3L, 2L);
             thirdIssue.setIssueAt();
 
             issueDao.save(firstIssue);
