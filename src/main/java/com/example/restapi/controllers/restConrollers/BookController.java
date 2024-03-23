@@ -5,6 +5,7 @@ import com.example.restapi.services.book.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -40,5 +41,13 @@ public class BookController {
     public ResponseEntity<List<BookEntity>> getALl(){
         List<BookEntity> bookEntities = service.findAll();
         return new ResponseEntity<>(bookEntities, HttpStatus.OK);
+    }
+
+    @GetMapping("/byName")
+    public ResponseEntity<BookEntity> findByName(@RequestParam("bookName") String bookName){
+        BookEntity book = service.findByName(bookName);
+        if (book == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Не удалось найти книгу с названием, содержащим имя=" + bookName);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 }

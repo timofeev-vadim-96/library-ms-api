@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -49,5 +50,11 @@ public class IssueController {
     public ResponseEntity<List<IssueEntity>> getALl(){
         List<IssueEntity> issueEntities = service.findAll();
         return new ResponseEntity<>(issueEntities, HttpStatus.OK);
+    }
+
+    @GetMapping("/IssueAtBetween")
+    public ResponseEntity<List<IssueEntity>> findAllByIssueAtBetween
+            (@RequestParam("from") LocalDateTime from, @RequestParam("to") LocalDateTime to){
+        return new ResponseEntity<>(service.findAllByIssueAtBetween(from, to), HttpStatus.OK);
     }
 }

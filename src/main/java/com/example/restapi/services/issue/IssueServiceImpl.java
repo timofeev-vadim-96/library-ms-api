@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -109,8 +110,6 @@ public class IssueServiceImpl implements IssueService {
         for (IssueEntity issue: readersIssues){
             readersBooks.add(bookService.findById(issue.getBookId()));
         }
-        //todo
-        System.out.println(readersBooks);
         return readersBooks;
     }
 
@@ -132,5 +131,10 @@ public class IssueServiceImpl implements IssueService {
                 .findFirst()
                 .orElse(null);
         return issueEntity != null;
+    }
+
+    @Override
+    public List<IssueEntity> findAllByIssueAtBetween(LocalDateTime from, LocalDateTime to){
+        return issueDao.findAllByIssueAtBetween(from, to);
     }
 }

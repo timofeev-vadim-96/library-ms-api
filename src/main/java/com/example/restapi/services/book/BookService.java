@@ -12,4 +12,5 @@ public interface BookService {
     void deleteById(long id);
 
     List<BookEntity> findAll();
+    BookEntity findByName(String bookName);
 }

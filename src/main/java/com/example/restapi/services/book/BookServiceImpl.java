@@ -33,4 +33,9 @@ public class BookServiceImpl implements BookService {
     public List<BookEntity> findAll() {
         return dao.findAll();
     }
+
+    @Override
+    public BookEntity findByName(String bookName) {
+        return dao.findBookEntitiesByNameContaining(bookName);
+    }
 }

@@ -3,6 +3,8 @@ package com.example.restapi.services.issue;
 import com.example.restapi.controllers.dto.IssueRequest;
 import com.example.restapi.models.BookEntity;
 import com.example.restapi.models.IssueEntity;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IssueService {
@@ -19,4 +21,5 @@ public interface IssueService {
     public List<BookEntity> getReaderBooks(long readerId);
 
     IssueEntity closeIssue(long issueId);
+    public List<IssueEntity> findAllByIssueAtBetween(LocalDateTime inputFrom, LocalDateTime inputTo);
 }

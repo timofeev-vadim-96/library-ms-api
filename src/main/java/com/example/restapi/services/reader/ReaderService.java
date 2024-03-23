@@ -2,6 +2,7 @@ package com.example.restapi.services.reader;
 
 import com.example.restapi.models.ReaderEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ReaderService {
@@ -12,4 +13,7 @@ public interface ReaderService {
     void deleteById(long id);
 
     List<ReaderEntity> findAll();
+    ReaderEntity findByPhone(String phone);
+    List<ReaderEntity> findAllBySecondName(String secondName);
+    List<ReaderEntity> findAllByBirthDayAfter(LocalDate inputDate);
 }
