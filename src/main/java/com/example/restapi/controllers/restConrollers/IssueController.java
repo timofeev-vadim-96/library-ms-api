@@ -5,6 +5,9 @@ import com.example.restapi.exceptions.DebtorException;
 import com.example.restapi.exceptions.TheBookIsBusy;
 import com.example.restapi.models.IssueEntity;
 import com.example.restapi.services.issue.IssueService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,12 @@ public class IssueController {
         this.service = service;
     }
 
+    @Operation(summary = "issue a book", description = "Выдать книгу, сохранив случай выдачи")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "409", description = "CONFLICT")
+    })
     @PostMapping
     public ResponseEntity<IssueEntity> bookIssuance(@RequestBody IssueRequest issueRequest) {
         try {
@@ -32,6 +41,11 @@ public class IssueController {
         }
     }
 
+    @Operation(summary = "get issue by id", description = "Получить случай выдачи по id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+    })
     @GetMapping("/{id}")
     public ResponseEntity<IssueEntity> getIssue(@PathVariable("id") long id) {
         IssueEntity issueEntity = service.findById(id);
@@ -39,6 +53,11 @@ public class IssueController {
         else return new ResponseEntity<>(issueEntity, HttpStatus.OK);
     }
 
+    @Operation(summary = "close issue", description = "Закрыть факт выдачи по возврату книги читателем")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+    })
     @PutMapping("/{issueId}")
     public ResponseEntity<IssueEntity> closeIssue(@PathVariable("issueId") long issueId){
         IssueEntity issueEntity = service.closeIssue(issueId);
@@ -46,15 +65,21 @@ public class IssueController {
         else return new ResponseEntity<>(issueEntity, HttpStatus.OK);
     }
 
+    @Operation(summary = "get all issues", description = "Получить все случаи выдач книг читателям")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping
     public ResponseEntity<List<IssueEntity>> getALl(){
         List<IssueEntity> issueEntities = service.findAll();
         return new ResponseEntity<>(issueEntities, HttpStatus.OK);
     }
 
+    @Operation(summary = "get issues by the time interval",
+            description = "Получить все случаи выдачи в определенном интервале дат")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/IssueAtBetween")
     public ResponseEntity<List<IssueEntity>> findAllByIssueAtBetween
-            (@RequestParam("from") LocalDateTime from, @RequestParam("to") LocalDateTime to){
+            (@RequestParam("from") LocalDateTime from,
+             @RequestParam("to") LocalDateTime to){
         return new ResponseEntity<>(service.findAllByIssueAtBetween(from, to), HttpStatus.OK);
     }
 }

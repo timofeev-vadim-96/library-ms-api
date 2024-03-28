@@ -9,7 +9,7 @@ public interface BookService {
 
     BookEntity save(BookEntity bookEntity);
 
-    void deleteById(long id);
+    boolean deleteById(long id);
 
     List<BookEntity> findAll();
     BookEntity findByName(String bookName);

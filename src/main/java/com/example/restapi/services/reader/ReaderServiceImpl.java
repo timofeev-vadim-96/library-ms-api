@@ -27,8 +27,13 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public void deleteById(long id){
-        dao.deleteById(id);
+    public boolean deleteById(long id){
+        ReaderEntity reader = findById(id);
+        if (reader == null) return false;
+        else {
+            dao.deleteById(id);
+            return true;
+        }
     }
 
     @Override

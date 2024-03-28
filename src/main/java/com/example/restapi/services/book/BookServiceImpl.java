@@ -25,8 +25,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(long id){
-        dao.deleteById(id);
+    public boolean deleteById(long id){
+        BookEntity book = findById(id);
+        if (book == null) return false;
+        else {
+            dao.deleteById(id);
+            return true;
+        }
     }
 
     @Override

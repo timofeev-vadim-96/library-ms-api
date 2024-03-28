@@ -4,6 +4,9 @@ import com.example.restapi.models.IssueEntity;
 import com.example.restapi.models.ReaderEntity;
 import com.example.restapi.services.issue.IssueService;
 import com.example.restapi.services.reader.ReaderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,11 @@ public class ReaderController {
         this.issueService = issueService;
     }
 
+    @Operation(summary = "get reader by id", description = "Предоставляет конкретного читателя по его id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ReaderEntity> getById(@PathVariable("id") long id) {
         ReaderEntity readerEntity = readerService.findById(id);
@@ -30,18 +38,31 @@ public class ReaderController {
         else return new ResponseEntity<>(readerEntity, HttpStatus.OK);
     }
 
+    @Operation(summary = "add new reader", description = "Добавляет нового читателя")
+    @ApiResponse(responseCode = "200", description = "OK")
     @PostMapping
     public ResponseEntity<ReaderEntity> add(@RequestBody ReaderEntity inputReaderEntity) {
         ReaderEntity returnedReaderEntity = readerService.save(inputReaderEntity);
         return new ResponseEntity<>(returnedReaderEntity, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "delete reader by id", description = "Удаляет конкретного читателя по его id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") long id) {
-        readerService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean success = readerService.deleteById(id);
+        if (!success) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "get reader's issues", description = "Получить все текущие случаи взятия книг по id читателя")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+    })
     @GetMapping("/{id}/issue")
     public ResponseEntity<List<IssueEntity>> readerIssues(@PathVariable("id") long id) {
         List<IssueEntity> readerIssueEntities = issueService.getReaderIssues(id);
@@ -49,12 +70,16 @@ public class ReaderController {
         return new ResponseEntity<>(readerIssueEntities, HttpStatus.OK);
     }
 
+    @Operation(summary = "get all readers", description = "Получить список всех читателей")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping
     public ResponseEntity<List<ReaderEntity>> getALl() {
         List<ReaderEntity> readerEntities = readerService.findAll();
         return new ResponseEntity<>(readerEntities, HttpStatus.OK);
     }
 
+    @Operation(summary = "get readers by second name", description = "Получить всех читателей по определенной фамилии")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/bySecondName")
     public ResponseEntity<List<ReaderEntity>> getBySecondName(@RequestParam("secondName") String secondName) {
         return new ResponseEntity<>(readerService.findAllBySecondName(secondName), HttpStatus.OK);
@@ -69,6 +94,9 @@ public class ReaderController {
         return new ResponseEntity<>(readerService.findByPhone(phone), HttpStatus.OK);
     }
 
+    @Operation(summary = "get readers born after the specified date",
+            description = "Получить всех пользователей, рожденных после даты")
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/older")
     public ResponseEntity<List<ReaderEntity>> getAllByBirthDayAfter(@RequestParam("date") LocalDate date) {
         return new ResponseEntity<>(readerService.findAllByBirthDayAfter(date), HttpStatus.OK);

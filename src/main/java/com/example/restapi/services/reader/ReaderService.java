@@ -10,7 +10,7 @@ public interface ReaderService {
 
     ReaderEntity save(ReaderEntity readerEntity);
 
-    void deleteById(long id);
+    boolean deleteById(long id);
 
     List<ReaderEntity> findAll();
     ReaderEntity findByPhone(String phone);
