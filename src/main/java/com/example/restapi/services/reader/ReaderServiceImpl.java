@@ -1,7 +1,7 @@
 package com.example.restapi.services.reader;
 
 import com.example.restapi.dao.ReaderRepository;
-import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.models.appEntities.ReaderEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

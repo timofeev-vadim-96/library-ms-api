@@ -1,4 +1,4 @@
-package com.example.restapi.models;
+package com.example.restapi.models.appEntities;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.example.restapi.utils;
 
 import com.example.restapi.dao.ReaderRepository;
-import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.models.appEntities.ReaderEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

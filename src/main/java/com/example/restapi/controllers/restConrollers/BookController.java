@@ -1,6 +1,6 @@
 package com.example.restapi.controllers.restConrollers;
 
-import com.example.restapi.models.BookEntity;
+import com.example.restapi.models.appEntities.BookEntity;
 import com.example.restapi.services.book.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

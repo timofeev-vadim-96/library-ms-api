@@ -1,4 +1,4 @@
-package com.example.restapi.models;
+package com.example.restapi.models.appEntities;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

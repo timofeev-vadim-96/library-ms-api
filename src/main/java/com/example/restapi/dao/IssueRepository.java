@@ -1,6 +1,6 @@
 package com.example.restapi.dao;
 
-import com.example.restapi.models.IssueEntity;
+import com.example.restapi.models.appEntities.IssueEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

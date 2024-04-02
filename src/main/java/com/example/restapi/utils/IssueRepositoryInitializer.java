@@ -1,7 +1,7 @@
 package com.example.restapi.utils;
 
 import com.example.restapi.dao.IssueRepository;
-import com.example.restapi.models.IssueEntity;
+import com.example.restapi.models.appEntities.IssueEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

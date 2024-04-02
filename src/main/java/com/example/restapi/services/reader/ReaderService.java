@@ -1,6 +1,6 @@
 package com.example.restapi.services.reader;
 
-import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.models.appEntities.ReaderEntity;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.example.restapi.controllers.restConrollers;
 
-import com.example.restapi.models.IssueEntity;
-import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.models.appEntities.IssueEntity;
+import com.example.restapi.models.appEntities.ReaderEntity;
 import com.example.restapi.services.issue.IssueService;
 import com.example.restapi.services.reader.ReaderService;
 import io.swagger.v3.oas.annotations.Operation;

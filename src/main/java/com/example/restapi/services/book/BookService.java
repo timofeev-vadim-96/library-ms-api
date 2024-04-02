@@ -1,6 +1,6 @@
 package com.example.restapi.services.book;
 
-import com.example.restapi.models.BookEntity;
+import com.example.restapi.models.appEntities.BookEntity;
 
 import java.util.List;
 

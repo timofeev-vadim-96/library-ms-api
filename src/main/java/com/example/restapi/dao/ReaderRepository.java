@@ -1,6 +1,6 @@
 package com.example.restapi.dao;
 
-import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.models.appEntities.ReaderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

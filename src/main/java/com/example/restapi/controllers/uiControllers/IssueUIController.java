@@ -1,6 +1,6 @@
 package com.example.restapi.controllers.uiControllers;
 
-import com.example.restapi.models.IssueEntity;
+import com.example.restapi.models.appEntities.IssueEntity;
 import com.example.restapi.services.issue.IssueService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

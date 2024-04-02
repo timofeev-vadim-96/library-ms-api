@@ -11,6 +11,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  profiles:
+    active: security_oauth
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/master #по этому адресу работает котейнер oauth 2.0 (JSON)
 server:
   error:
     include-message: always
+  port: 8081

@@ -1,7 +1,7 @@
 package com.example.restapi.utils;
 
 import com.example.restapi.dao.BookRepository;
-import com.example.restapi.models.BookEntity;
+import com.example.restapi.models.appEntities.BookEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

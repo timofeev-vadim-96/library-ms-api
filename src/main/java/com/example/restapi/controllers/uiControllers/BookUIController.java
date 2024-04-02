@@ -1,6 +1,6 @@
 package com.example.restapi.controllers.uiControllers;
 
-import com.example.restapi.models.BookEntity;
+import com.example.restapi.models.appEntities.BookEntity;
 import com.example.restapi.services.book.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

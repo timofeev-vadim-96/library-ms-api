@@ -1,8 +1,7 @@
 package com.example.restapi.controllers.uiControllers;
 
-import com.example.restapi.models.BookEntity;
-import com.example.restapi.models.IssueEntity;
-import com.example.restapi.models.ReaderEntity;
+import com.example.restapi.models.appEntities.BookEntity;
+import com.example.restapi.models.appEntities.ReaderEntity;
 import com.example.restapi.services.issue.IssueService;
 import com.example.restapi.services.reader.ReaderService;
 import org.springframework.http.HttpStatus;

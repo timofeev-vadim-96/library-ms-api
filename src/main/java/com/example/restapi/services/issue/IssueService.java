@@ -1,8 +1,8 @@
 package com.example.restapi.services.issue;
 
 import com.example.restapi.controllers.dto.IssueRequest;
-import com.example.restapi.models.BookEntity;
-import com.example.restapi.models.IssueEntity;
+import com.example.restapi.models.appEntities.BookEntity;
+import com.example.restapi.models.appEntities.IssueEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -3,7 +3,7 @@ package com.example.restapi.controllers.restConrollers;
 import com.example.restapi.controllers.dto.IssueRequest;
 import com.example.restapi.exceptions.DebtorException;
 import com.example.restapi.exceptions.TheBookIsBusy;
-import com.example.restapi.models.IssueEntity;
+import com.example.restapi.models.appEntities.IssueEntity;
 import com.example.restapi.services.issue.IssueService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -76,7 +76,7 @@ public class IssueController {
     @Operation(summary = "get issues by the time interval",
             description = "Получить все случаи выдачи в определенном интервале дат")
     @ApiResponse(responseCode = "200", description = "OK")
-    @GetMapping("/IssueAtBetween")
+    @GetMapping(params = {"from", "to"})
     public ResponseEntity<List<IssueEntity>> findAllByIssueAtBetween
             (@RequestParam("from") LocalDateTime from,
              @RequestParam("to") LocalDateTime to){
