@@ -12,7 +12,7 @@ spring:
       ddl-auto: update
     show-sql: true
   profiles:
-    active: security_oauth
+    active: security_common
   security:
     oauth2:
       resourceserver:

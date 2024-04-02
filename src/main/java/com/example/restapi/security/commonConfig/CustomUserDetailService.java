@@ -24,8 +24,8 @@ public class CustomUserDetailService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        CustomUserEntity person = dao.findByLogin(login).orElseThrow(()->
+        CustomUserEntity user = dao.findByLogin(login).orElseThrow(()->
                 new UsernameNotFoundException(String.format("пользователь с логином %s не найден.", login)));
-        return new User(person.getLogin(), person.getPassword(), List.of(new SimpleGrantedAuthority(person.getRole())));
+        return new User(user.getLogin(), user.getPassword(), List.of(new SimpleGrantedAuthority(user.getRole())));
     }
 }
