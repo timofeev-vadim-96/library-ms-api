@@ -56,7 +56,7 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public List<BookEntity> getReadersBooks(long readerId) {
-        return issueProvider.getReaderIssues(readerId).stream().map(IssueEntity::getBook).collect(Collectors.toList());
+    public List<IssueEntity> getReadersIssues(long readerId) {
+        return issueProvider.getReaderIssues(readerId);
     }
 }

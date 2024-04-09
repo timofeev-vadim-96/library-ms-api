@@ -2,6 +2,7 @@ package ru.gb.service;
 
 
 import ru.gb.model.BookEntity;
+import ru.gb.model.IssueEntity;
 import ru.gb.model.ReaderEntity;
 
 import java.time.LocalDate;
@@ -18,5 +19,5 @@ public interface ReaderService {
     ReaderEntity findByPhone(String phone);
     List<ReaderEntity> findAllBySecondName(String secondName);
     List<ReaderEntity> findAllByBirthDayAfter(LocalDate inputDate);
-    List<BookEntity> getReadersBooks(long readerId);
+    List<IssueEntity> getReadersIssues(long readerId);
 }

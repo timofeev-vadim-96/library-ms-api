@@ -19,11 +19,9 @@ import java.util.List;
 @RequestMapping("/reader")
 public class ReaderController {
     private final ReaderService readerService;
-    private final IssueProvider issueProvider;
 
-    public ReaderController(ReaderService readerService, IssueProvider issueProvider) {
+    public ReaderController(ReaderService readerService) {
         this.readerService = readerService;
-        this.issueProvider = issueProvider;
     }
 
     @Operation(summary = "get reader by id", description = "Предоставляет конкретного читателя по его id")
@@ -65,7 +63,7 @@ public class ReaderController {
     })
     @GetMapping("/{id}/issue")
     public ResponseEntity<List<IssueEntity>> readerIssues(@PathVariable("id") long id) {
-        List<IssueEntity> readerIssueEntities = issueProvider.getReaderIssues(id);
+        List<IssueEntity> readerIssueEntities = readerService.getReadersIssues(id);
         if (readerIssueEntities == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(readerIssueEntities, HttpStatus.OK);
     }

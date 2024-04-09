@@ -1,20 +1,30 @@
 package ru.gb.service;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.gb.model.IssueEntity;
 import java.util.List;
+import java.util.Random;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class IssueProvider {
+    private final EurekaClient eurekaClient;
 
     public List<IssueEntity> getReaderIssues(long readerId) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8085/issue/readersIssues/" + readerId;
+        String url = getIssueServiceIp() + "issue/readersIssues/" + readerId;
+
+        System.out.println("ISSUE SERVICE: " + url);
 
         ResponseEntity<List<IssueEntity>> responseEntity = restTemplate.exchange(
                 url,
@@ -25,14 +35,19 @@ public class IssueProvider {
         );
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            List<IssueEntity> readersIssues = responseEntity.getBody();
 
-            //todo log
-            System.out.println(readersIssues);
-
-            return readersIssues;
+            return responseEntity.getBody();
         } else {
             return null;
         }
+    }
+
+    private String getIssueServiceIp(){
+        Application application = eurekaClient.getApplication("ISSUE-MICROSERVICE");
+        List<InstanceInfo> instanceInfos = application.getInstances();
+
+        Random random = new Random();
+        InstanceInfo randomInstance = instanceInfos.get(random.nextInt(instanceInfos.size()));
+        return "http://" + randomInstance.getIPAddr() + ":" + randomInstance.getPort() + "/";
     }
 }
