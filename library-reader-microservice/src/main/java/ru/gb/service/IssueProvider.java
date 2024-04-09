@@ -24,8 +24,6 @@ public class IssueProvider {
         RestTemplate restTemplate = new RestTemplate();
         String url = getIssueServiceIp() + "issue/readersIssues/" + readerId;
 
-        System.out.println("ISSUE SERVICE: " + url);
-
         ResponseEntity<List<IssueEntity>> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.GET,

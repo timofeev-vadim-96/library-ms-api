@@ -22,8 +22,6 @@ public class ReaderProvider {
         RestTemplate restTemplate = new RestTemplate();
         String url = getReaderServiceIp() + "reader/" + readerId;
 
-        System.out.println("READER SERVICE: " + url);
-
         ResponseEntity<ReaderEntity> responseEntity = restTemplate.getForEntity(url, ReaderEntity.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {

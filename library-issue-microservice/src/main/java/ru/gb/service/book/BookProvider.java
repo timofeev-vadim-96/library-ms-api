@@ -22,8 +22,6 @@ public class BookProvider {
         RestTemplate restTemplate = new RestTemplate();
         String url = getBookServiceIp() + "book/" + bookId;
 
-        System.out.println("BOOK SERVICE: " + url);
-
         ResponseEntity<BookEntity> responseEntity = restTemplate.getForEntity(url, BookEntity.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
